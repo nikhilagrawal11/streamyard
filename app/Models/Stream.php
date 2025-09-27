@@ -75,4 +75,9 @@ class Stream extends Model
     {
         return in_array($this->status, ['scheduled', 'live']);
     }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
+    }
 }

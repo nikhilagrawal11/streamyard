@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ParticipantApiController;
 use App\Http\Controllers\Api\StreamApiController;
 use App\Http\Controllers\Api\VideoApiController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/streams/{stream:uuid}/ice-candidate', [StreamApiController::class, 'iceCandidate']);
     Route::post('/streams/{stream:uuid}/offer', [StreamApiController::class, 'offer']);
     Route::post('/streams/{stream:uuid}/answer', [StreamApiController::class, 'answer']);
+
+    Route::post('/streams/{stream:uuid}/chat', [ChatController::class, 'store']);
+    Route::get('/streams/{stream:uuid}/chat', [ChatController::class, 'index']);
 });
 
 // Public API endpoints

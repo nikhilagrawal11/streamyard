@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CameraSourceController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StreamController;
 use App\Http\Controllers\StreamParticipantController;
@@ -78,6 +79,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/schedules/{schedule:uuid}', [StreamScheduleController::class, 'update'])->name('schedules.update');
     Route::delete('/schedules/{schedule:uuid}', [StreamScheduleController::class, 'destroy'])->name('schedules.destroy');
     Route::post('/schedules/{schedule:uuid}/broadcast', [StreamScheduleController::class, 'broadcast'])->name('schedules.broadcast');
+
+    Route::post('/streams/{stream:uuid}/chat', [ChatController::class, 'store'])->name('chat.store');
+    Route::get('/streams/{stream:uuid}/chat', [ChatController::class, 'index'])->name('chat.index');
 });
 
 // Public Routes (for viewers)

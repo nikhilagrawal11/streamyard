@@ -69,6 +69,36 @@ window.StreamingUtils = {
         setTimeout(() => {
             toast.remove();
         }, 5000);
+    },
+
+    chat: {
+        formatTime(timestamp) {
+            return new Date(timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        },
+
+        escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        },
+
+        createMessageElement(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-2 mb-3';
+            messageDiv.innerHTML = `
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
+                    <span class="text-white text-xs font-medium">${message.username.charAt(0).toUpperCase()}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-medium text-white">${this.escapeHtml(message.username)}</span>
+                        <span class="text-xs text-gray-400">${this.formatTime(message.sent_at)}</span>
+                    </div>
+                    <p class="text-sm text-gray-200 mt-1">${this.escapeHtml(message.message)}</p>
+                </div>
+            `;
+            return messageDiv;
+        }
     }
 };
 
