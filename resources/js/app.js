@@ -4,26 +4,7 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-// Initialize Echo for real-time features
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
-
-window.Pusher = Pusher;
-
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    wssPort: 6001,
-    forceTLS: false,
-    enabledTransports: ['ws', 'wss'],
-});
-
-// Global streaming utilities
 window.StreamingUtils = {
-    // WebRTC configuration
     rtcConfiguration: {
         iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
@@ -31,7 +12,6 @@ window.StreamingUtils = {
         ]
     },
 
-    // Get user media with error handling
     async getUserMedia(constraints = { video: true, audio: true }) {
         try {
             return await navigator.mediaDevices.getUserMedia(constraints);
@@ -41,7 +21,6 @@ window.StreamingUtils = {
         }
     },
 
-    // Format duration from seconds
     formatDuration(seconds) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
@@ -54,7 +33,6 @@ window.StreamingUtils = {
         }
     },
 
-    // Show toast notifications
     showToast(message, type = 'info') {
         const toast = document.createElement('div');
         toast.className = `fixed top-4 right-4 px-4 py-2 rounded-lg shadow-lg z-50 text-white ${
@@ -102,7 +80,6 @@ window.StreamingUtils = {
     }
 };
 
-// Global error handler for unhandled promises
 window.addEventListener('unhandledrejection', function(event) {
     console.error('Unhandled promise rejection:', event.reason);
     window.StreamingUtils.showToast('An unexpected error occurred', 'error');
